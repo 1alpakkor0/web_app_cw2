@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content_home %}
+<div class="delete-account-container">
+    <div class="delete-account-card">
+        <h2>Delete Account</h2>
+        <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+        <form action="{{ url_for('delete_account') }}" method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="delete-account-buttons">
+                <button type="submit" class="btn btn-danger">Confirm Delete Account</button>
+                <a href="{{ url_for('profile') }}" class="btn btn-secondary">Cancel</a>
+
+            </div>
+            
+        </form>
+
+    </div>
+
+
+</div>
+{% endblock %}
