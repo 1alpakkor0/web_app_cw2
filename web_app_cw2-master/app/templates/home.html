@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content_home %}
+
+
+<section class="hp-categories">
+    <div class="categories-grid">
+        {% for category in categories %}
+        <div class="card">
+            <a href="{{ url_for('category_view', category_id=category.id) }}">
+                <h2>{{ category.name }}</h2>
+                <img src="{{ url_for('static', filename='images/' + category.name|lower|replace(' ', '_') + '.jpg') }}" alt="{{ category.name }}">
+                <p>Explore {{ category.name }}</p>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+
+
+
+<section class="login-card-hp">
+    <div class="signup-card">
+        <h2>Sign up</h2>
+        <p>Join us today</p>
+        <a href="{{ url_for('signup') }}" class="btn btn-primary">Sign up</a>
+    </div>
+
+    <div class="login-card">
+        <h2>Login</h2>
+        <p>Already a member?</p>
+        <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+    </div>
+</section>
+
+{% endblock %}
+
+
+
+
+

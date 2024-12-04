@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content_home %}
+<h1 class="category-title" style="text-align: center">{{ category.name }}</h1>
+<div class="row">
+    {% for product in products %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <img src="{{ url_for('static', filename=( 'images/' ~ product.image )) }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">{{ product.description }}</p>
+                <p><strong>${{ product.price }}</strong></p>
+                <button class="btn btn-primary add-to-cart-btn" data-product-id="{{ product.id }}">Add to Cart</button>
+                <button class="btn btn-secondary like-btn" data-product-id="{{ product.id }}">
+                    {% if current_user.is_authenticated and product in current_user.favorites %}
+                        Unlike
+                    {% else %}
+                        Like
+                    {% endif %}
+                </button>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+

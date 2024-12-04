@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Alp Store</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+    <header class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home') }}">Alp Store</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('home') }}">Home</a>
+                            <!-- <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Home" width="20"> -->
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="d-flex" action="{{ url_for('search') }}" method="GET">
+                            <input class="form-control me-2" type="search" name="search_query" placeholder="Search for products">
+                            <button class="btn" type="submit">Search</button>
+                        </form>
+                    </li>
+                </ul>
+
+
+
+                <ul class="navbar-nav ms-auto">
+                    {% if current_user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="btn btn-success" href="{{ url_for('cart') }}">Cart <span class="badge bg-primary">{{ cart_count }}</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-info" href="{{ url_for('wishlist') }}">
+                                Wishlist
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('profile') }}">
+                                <img src="{{ url_for('static', filename='images/profile_icon.png') }}" alt="Profile" width="30">
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+                        </li>
+
+                    {% else %}
+
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="{{ url_for('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-secondary" href="{{ url_for('signup') }}">Sign up</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </header>
+
+
+
+    <nav class="category-list">
+        <ul>
+            {% for category in categories %}
+                <li><a href="{{ url_for('category_view', category_id=category.id) }}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+    
+    <h1 class="text-center mt-5">Welcome to Alp Store</h1>
+    <p class="text-center">Your one-stop shop for all your needs</p>
+
+
+    <main class="container">
+        {% block content_home %}
+        {% endblock %}
+
+    </main>
+
+    <footer class="footer bg-dark text-white mt-5">
+        <div class="container py-4">
+            <div class="row">
+                
+                <div class="col-md-3">
+                    <h5>About Alp Store</h5>
+                    <p>Your one-stop shop for all your needs. We offer a wide range of products to give you every taste and requirement.</p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('home') }}" class="text-white">Home</a></li>
+                        <li><a href="{{ url_for('cart') }}" class="text-white">Cart</a></li>
+                        <li><a href="{{ url_for('wishlist') }}" class="text-white">Wishlist</a></li>
+                        <li><a href="{{ url_for('profile') }}" class="text-white">Profile</a></li>
+                        <li><a href="{{ url_for('logout') }}" class="text-white">Logout</a></li>
+                    </ul>
+                </div>
+        
+                <div class="col-md-3">
+                    <h5>Contact Me</h5>
+                    <p>Email: alp.akkor@gmail.com</p>
+                    <p>Phone: +44 07377608341</p>
+                    <p>Address: 16 Merrion Way, Leeds, UK</p>
+                </div>
+                
+                <div class="col-md-3">
+                    <h5>Follow Me</h5>
+                    <a href="https://www.linkedin.com/in/alp-akkor-3490a8247/" class="text-white me-2" target="_blank" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2024 Alp Store. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-right">
+                    <p class="mb-0">Designed by Alp Akkor</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+
+
+    <script>
+        window.csrf_token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/category.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+</body>
+
+
+
+</html>

@@ -1,0 +1,1 @@
+## Please run export FLASK_APP=run.py and export FLASK_DEBUG=1 in your local computer's bash to run the application(Flask's built-in server)

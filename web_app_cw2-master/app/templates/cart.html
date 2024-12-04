@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content_home %}
+<div class="cart-container">
+    <h2>Your Cart</h2>
+    {% if cart_items %}
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% set total = namespace(value=0) %}
+                {% for item in cart_items %}
+                    {% set subtotal = item.product.price * item.quantity %}
+                    {% set total.value = total.value + subtotal %}
+                    <tr id="cart-item-{{ item.id }}">
+                        <td class="product-name">{{ item.product.name }}</td>
+                        <td class="product-price">${{ "%.2f"|format(item.product.price) }}</td>
+                        <td class="product-quantity">{{ item.quantity }}</td>
+                        <td class="product-subtotal">${{ "%.2f"|format(subtotal) }}</td>
+                        <td>
+                            <button class="btn btn-danger remove-from-cart-btn" data-item-id="{{ item.id }}">Remove</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="cart-total">
+            <h4>Total: <span id="cart-total">${{ "%.2f"|format(total.value) }}</span></h4>
+        </div>
+        
+    {% else %}
+        <p style="text-align: center;">Your cart is empty.</p>
+    {% endif %}
+</div>
+
+
+
+
+
+{% endblock %}
